@@ -11,8 +11,8 @@ namespace ProgrammersBlog.Entities.Concrete {
 		public string Content { get; set; }
 		public string Thumbnail { get; set; } // Resmin ismini ya da yolunu string olarak tutacağız.
 		public DateTime Date { get; set; }
-		public int ViewCount { get; set; }
-		public int CommentCount { get; set; }
+		public int ViewCount { get; set; } = 0;
+		public int CommentCount { get; set; } = 0;
 		
 		// SEO Optimization
 		public string SeoAuthor { get; set; }
