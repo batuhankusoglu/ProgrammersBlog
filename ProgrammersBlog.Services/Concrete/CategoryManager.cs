@@ -24,14 +24,19 @@ namespace ProgrammersBlog.Services.Concrete {
 		}
 
 		#region Add Method
-		public async Task<IResult> Add( CategoryAddDto categoryAddDto, string createdByName ) {
+		public async Task<IDataResult<CategoryDto>> Add( CategoryAddDto categoryAddDto, string createdByName ) {
 			var category = _mapper.Map<Category>(categoryAddDto);
 			category.CreatedByName = createdByName;
 			category.ModifiedByName = createdByName;
-			await _unitOfWork.Categories.AddAsync( category );
+			var addedCategory =  await _unitOfWork.Categories.AddAsync( category );
 			await _unitOfWork.SaveAsync();
 			// await _unitOfWork.SaveAsync();
-			return new Result( ResultStatus.Success, message: $"{ categoryAddDto.Name} adlı kategori başarıyla eklenmiştir." );
+			return new DataResult<CategoryDto>( ResultStatus.Success, message: $"{ categoryAddDto.Name} adlı kategori başarıyla eklenmiştir.",
+				new CategoryDto { 
+					Category = addedCategory,
+					ResultStatus = ResultStatus.Success,
+					Message = $"{ categoryAddDto.Name} adlı kategori başarıyla eklenmiştir."
+				} );
 		}
 
 		#endregion
@@ -72,7 +77,12 @@ namespace ProgrammersBlog.Services.Concrete {
 					ResultStatus = ResultStatus.Success
 				} );
 			}
-			return new DataResult<CategoryDto>( ResultStatus.Error, message: "Böyle bir kategori bulunamadı.", data: null );
+			return new DataResult<CategoryDto>( ResultStatus.Error, message: "Böyle bir kategori bulunamadı.", 
+				data: new CategoryDto { 
+					Category = null,
+					ResultStatus = ResultStatus.Error,
+					Message = "Böyle bir kategori bulunamadı."
+				}  );
 		}
 
 		public async Task<IDataResult<CategoryListDto>> GetAll() {
@@ -119,13 +129,18 @@ namespace ProgrammersBlog.Services.Concrete {
 		#endregion
 
 		#region Update Method
-		public async Task<IResult> Update( CategoryUpdateDto categoryUpdateDto, string modifiedByName ) {
+		public async Task<IDataResult<CategoryDto>> Update( CategoryUpdateDto categoryUpdateDto, string modifiedByName ) {
 			// Update edilecek kategoriyi Id'sine göre getirmeliyiz öncelikle.
 			var category = _mapper.Map<Category>(categoryUpdateDto);
 			category.ModifiedByName = modifiedByName;
-			await _unitOfWork.Categories.UpdateAsync( category );
+			var updatedCategory =  await _unitOfWork.Categories.UpdateAsync( category );
 			await _unitOfWork.SaveAsync();
-			return new Result( ResultStatus.Success, message: $"{ categoryUpdateDto.Name} adlı kategori başarıyla güncellenmiştir.." );
+			return new DataResult<CategoryDto>( ResultStatus.Success, message: $"{ categoryUpdateDto.Name} adlı kategori başarıyla güncellenmiştir.",
+				new CategoryDto { 
+					Category = updatedCategory,
+					ResultStatus = ResultStatus.Success,
+					Message = $"{ categoryUpdateDto.Name} adlı kategori başarıyla güncellenmiştir."
+				} );
 		}
 
 		#endregion

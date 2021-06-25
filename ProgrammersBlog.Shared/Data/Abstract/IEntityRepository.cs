@@ -30,8 +30,11 @@ namespace ProgrammersBlog.Shared.Data.Abstract {
 		/// <returns></returns>
 		Task<IList<T>> GetAllAsync( Expression<Func<T, bool>> predicate = null, params Expression<Func<T, object>>[] includeProperties );
 
-		Task AddAsync( T entity );
-		Task UpdateAsync( T entity );
+		
+		// Tip ekliyoruz <T>.Örneğin kategori eklendiğinde bizlere geriye kategori dönecek ve JSSON çevrildikten sonra Frontend kısmına gönderilecek.
+		Task<T> AddAsync( T entity );
+		Task<T> UpdateAsync( T entity );
+		
 		Task DeleteAsync( T entity );
 		Task<bool> AnyAsync( Expression<Func<T, bool>> predicate );
 		Task<int> CountAsync( Expression<Func<T, bool>> predicate );
