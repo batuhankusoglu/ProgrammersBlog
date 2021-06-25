@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using ProgrammersBlog.Services.AutoMapper.Profiles;
 using ProgrammersBlog.Services.Extensions;
 
 namespace ProgrammersBlog.MVC {
@@ -22,7 +23,7 @@ namespace ProgrammersBlog.MVC {
 		public void ConfigureServices( IServiceCollection services ) {
 			services.AddControllersWithViews().AddRazorRuntimeCompilation();
 			services.LoadMyServices();
-			services.AddAutoMapper( typeof( Startup ) );
+			services.AddAutoMapper( typeof( CategoryProfile ),typeof(ArticleProfile) );
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
