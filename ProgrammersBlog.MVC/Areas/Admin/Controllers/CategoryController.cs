@@ -29,5 +29,13 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers {
 			
 			return View(result.Data);
 		}
+
+		/// <summary>
+		/// Partial View olduğundan asenkron yapmamıza gerek yok.
+		/// </summary>
+		/// <returns></returns>
+		public IActionResult Add() {
+			return PartialView( "_CategoryAddPartial" );
+		}
 	}
 }
