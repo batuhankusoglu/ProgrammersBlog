@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -21,7 +22,10 @@ namespace ProgrammersBlog.MVC {
 
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices( IServiceCollection services ) {
-			services.AddControllersWithViews().AddRazorRuntimeCompilation();
+			services.AddControllersWithViews().AddRazorRuntimeCompilation().AddJsonOptions(opt => {
+				opt.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+				opt.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+			} );
 			services.LoadMyServices();
 			services.AddAutoMapper( typeof( CategoryProfile ),typeof(ArticleProfile) );
 		}
