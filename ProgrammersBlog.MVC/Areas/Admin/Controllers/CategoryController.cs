@@ -25,7 +25,7 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers {
 
 		public async Task<IActionResult> Index() {
 			// Categoryservice içinde data resuly dönüyoruz. Bu result success ise ona göre işlem yapacağız.
-			var result = await _categoryService.GetAll();
+			var result = await _categoryService.GetAllByNonDeleted();
 
 			// Aşağıdaki kısım controllerda değil viewda çözecğimiz için commente alındı.
 			//if (result.ResultStatus == ResultStatus.Success) {
@@ -77,8 +77,8 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers {
 		[HttpPost]
 		public async Task<JsonResult> Delete( int categoryId ) {
 			var result = await _categoryService.Delete(categoryId, "Batuhan");
-			var ajaxResult = JsonSerializer.Serialize(result);
-			return Json( ajaxResult );
+			var deletedCategory = JsonSerializer.Serialize(result.Data);
+			return Json( deletedCategory);
 		}
 	}
 }

@@ -16,7 +16,7 @@ namespace ProgrammersBlog.Services.Abstract {
 		Task<IDataResult<CategoryListDto>> GetAllByNonDeletedAndActive();
 		Task<IDataResult<CategoryDto>> Add( CategoryAddDto categoryAddDto, string createdByName );
 		Task<IDataResult<CategoryDto>> Update( CategoryUpdateDto categoryUpdateDto, string modifiedByName );
-		Task<IResult> Delete( int categoryId, string modifiedByName );			// Sadece kategorinin IsDeleted değerini true yapacak.
+		Task<IDataResult<CategoryDto>> Delete( int categoryId, string modifiedByName );			// Sadece kategorinin IsDeleted değerini true yapacak.
 		Task<IResult> HardDelete( int categoryId );		// Perminant delete diyebiliriz.?
 	}
 }
